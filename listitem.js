@@ -4,6 +4,10 @@ const Promise = require('bluebird')
 const db = require('./db')
 const async = require('async')
 
+exports.count = function() {
+  return db.collection('listitem').count()
+}
+
 exports.list = function(opts) {
   const take = parseInt(opts.take) || 100
   const skip = parseInt(opts.skip) || 0

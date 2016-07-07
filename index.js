@@ -29,9 +29,15 @@ app.route('/api/listfile')
 
 app.route('/api/listitem')
   .get((req, res, next) => {
-    ListItem.list(req.query)
-      .then(result => {
-        res.send(result)
+    Promise.all([
+        ListItem.list(req.query),
+        ListItem.count()
+      ])
+      .then(results => {
+        res.send({
+          data: results[0],
+          count: results[1]
+        })
       }, err => {
         next(err)
       })
