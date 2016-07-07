@@ -37,9 +37,25 @@ app.route('/api/listitem')
       })
   })
 
-app.route('/api/listitem/:id/note')
-  .post((req, res, next) => {
-
+app.route('/api/listitem/:id/data')
+  .get((req, res, next) => {
+    const phone = req.params.id
+    ListItem.getData(phone)
+      .then(result => {
+        res.send(result)
+      }, err => {
+        next(err)
+      })
+  })
+  .put((req, res, next) => {
+    const phone = req.params.id
+    const data = req.body
+    ListItem.putData(phone, data)
+      .then(result => {
+        res.send(result)
+      }, err => {
+        next(err)
+      })
   })
 
 console.log(`Connecting to db...`)

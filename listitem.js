@@ -43,6 +43,19 @@ exports.list = function(opts) {
     })
 }
 
+exports.getData = function(phone) {
+  return db.collection('listitem_data')
+    .find({_id:phone})
+    .limit(1)
+    .next()
+}
+
+exports.putData = function(phone, data) {
+  return db.collection('listitem_data')
+    .findOneAndReplace({_id:phone}, data || {}, {upsert:true})
+    .then(() => exports.getData(phone))
+}
+
 function escapeRegexp(s) {
   return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
