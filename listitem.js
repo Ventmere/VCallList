@@ -52,11 +52,14 @@ exports.getData = function(phone) {
     .find({_id:phone})
     .limit(1)
     .next()
+    .then(doc => {
+      return doc ? doc.data || {} : {}
+    })
 }
 
 exports.putData = function(phone, data) {
   return db.collection('listitem_data')
-    .findOneAndReplace({_id:phone}, data || {}, {upsert:true})
+    .findOneAndReplace({_id:phone}, {data: data || {}}, {upsert:true})
     .then(() => exports.getData(phone))
 }
 
