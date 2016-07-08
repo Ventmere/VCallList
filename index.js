@@ -13,7 +13,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-app.get('/', express.static('public'))
+app.use(express.static('public'))
 
 app.route('/api/listfile')
   .post((req, res, next) => {
