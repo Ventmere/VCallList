@@ -1,7 +1,10 @@
 "use strict"
 
+const config = require('./config')
+
 const express = require('express')
 const bodyParser = require('body-parser')
+const basicAuth = require('basic-auth-connect')
 const cors = require('cors')
 
 const db = require('./db')
@@ -12,6 +15,7 @@ const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(basicAuth(config.username, config.password))
 
 app.use(express.static('public'))
 

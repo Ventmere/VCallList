@@ -1,3 +1,5 @@
 {
-  "db": "mongodb://localhost:27017/v-callist"
+  "db": "mongodb://localhost:27017/v-callist",
+  "username": "chc",
+  "password": "0qpku6o6"
 }
