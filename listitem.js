@@ -15,8 +15,20 @@ exports.list = function(opts) {
     ? opts.keyword.trim() 
     : null
 
+  const keywordTypes = [
+    'first_name',
+    'last_name',
+    'address',
+    'city',
+    'province',
+    'postal'
+  ]
+
+  const keywordKey = keywordTypes.indexOf(opts.keyword_key) !== -1
+    ? opts.keyword_key : '_id'
+
   const filter = keyword
-    ? { _id: new RegExp(escapeRegexp(keyword)) }
+    ? { [keywordKey]: new RegExp(escapeRegexp(keyword)) }
     : undefined
 
   return db.collection('listitem')
