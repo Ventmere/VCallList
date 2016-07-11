@@ -28,7 +28,7 @@ exports.list = function(opts) {
     ? opts.keyword_key : '_id'
 
   const filter = keyword
-    ? { [keywordKey]: new RegExp(escapeRegexp(keyword)) }
+    ? { [keywordKey]: new RegExp(escapeRegexp(keyword), 'i') }
     : undefined
 
   return db.collection('listitem')
