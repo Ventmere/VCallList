@@ -40,16 +40,28 @@ exports.list = function(opts) {
     .then(docs => {
       const ids = docs.map(doc => doc._id)
       if (ids.length) {
-        return db.collection('blacklist')
-          .find({ 
-            _id: {
-              $in: ids
-            }
-          })
-          .toArray()
-          .then(blackDocs => {
+        return Promise.all([
+            db.collection('blacklist')
+              .find({ 
+                _id: {
+                  $in: ids
+                }
+              })
+              .toArray(),
+            db.collection('listitem_data')
+              .find({ 
+                _id: {
+                  $in: ids
+                }
+              })
+              .toArray()
+          ])
+          .then(([blackDocs, dataDocs]) => {
             blackDocs.forEach(bdoc => {
               docs.find(doc => doc._id === bdoc._id).is_in_blacklist = true
+            })
+            dataDocs.forEach(ddoc => {
+              docs.find(doc => doc._id === ddoc._id).data = ddoc.data || {}
             })
             return docs
           })
