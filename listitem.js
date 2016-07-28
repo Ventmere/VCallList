@@ -37,8 +37,8 @@ exports.list = function(opts) {
         [key]: new RegExp(escapeRegexp(value), 'i')
       } : undefined
     }
-  } else {
-    if (Array.isArray(keys) && Array.isArray(values) && keys.length === values.length) {
+  } else if (Array.isArray(keys) && Array.isArray(values)) {
+    if (keys.length === values.length) {
       const fkeys = keys.map(k => k.trim()).filter(k => !!k && keywordTypes.indexOf(k) !== -1)
       const fvalues = values.map(v => v.trim()).filter(v => !!v).map(v => new RegExp(escapeRegexp(v), 'i'))
       if (fkeys.length !== fvalues.length) {
